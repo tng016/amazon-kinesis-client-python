@@ -27,13 +27,13 @@ class Taxi_Location:
         self.latitude += numpy.random.normal()*mean_deglat_per_10m
         if self.latitude < Taxi_Location.min_lat:
             self.latitude = Taxi_Location.min_lat
-        elif if self.latitude > Taxi_Location.max_lat:
+        elif self.latitude > Taxi_Location.max_lat:
             self.latitude = Taxi_Location.max_lat
 
         self.longitude += numpy.random.normal()*mean_deglon_per_10m
         if self.longitude < Taxi_Location.min_lon:
             self.longitude = Taxi_Location.min_lon
-        elif if self.longitude > Taxi_Location.max_lon:
+        elif self.longitude > Taxi_Location.max_lon:
             self.longitude = Taxi_Location.max_lon
 
     def get_latlon(self):

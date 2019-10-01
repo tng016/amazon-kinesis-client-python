@@ -3,6 +3,10 @@
 Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0
 '''
+from __future__ import print_function
+import sys, random, time, argparse
+from boto import kinesis
+
 class Taxi_Location:
     num = 0
 
@@ -14,10 +18,6 @@ class Taxi_Location:
 
     def get_latlon(self):
         return str(self.latitude)+','+str(self.longitude)
-
-from __future__ import print_function
-import sys, random, time, argparse
-from boto import kinesis
 
 def get_stream_status(conn, stream_name):
     '''

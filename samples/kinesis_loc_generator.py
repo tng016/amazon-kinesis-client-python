@@ -138,6 +138,9 @@ echo "WORD1\\nWORD2\\nWORD3" | sample_wordputter.py -s STREAM_NAME -p 3
                       help="If you'd like to repeatedly put words into the stream, this option provides the period for putting "
                             + "words into the stream in SECONDS. If no period is given then the words are put every 10s.",
                       metavar="SECONDS",)
+    parser.add_argument("-n", "--numTaxi", dest="numTaxi", type=int, default=100,
+                      help="The number of taxis to initialise",
+                      metavar="TAXIS",)
     args = parser.parse_args()
     stream_name = args.stream_name
 
@@ -160,7 +163,7 @@ echo "WORD1\\nWORD2\\nWORD3" | sample_wordputter.py -s STREAM_NAME -p 3
         wait_for_stream(conn, stream_name)
     # Now the stream should exist, let's populate with Taxis
     taxis = []
-    for i in range(10):
+    for i in range(args.numTaxi):
         taxis.append(Taxi_Location())
     put_loc_in_stream_periodically(conn, stream_name, taxis, args.period)
     # if len(args.words) == 0:

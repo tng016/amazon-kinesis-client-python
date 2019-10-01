@@ -17,11 +17,11 @@ class Taxi_Location:
     mean_deglat_per_10m = 2.99437E-05
     mean_deglon_per_10m = 4.23496E-05
 
-    def __init__(self, lat, lon):
+    def __init__(self):
         self.id = Taxi_Location.num
         Taxi_Location.num += 1
-        self.latitude = lat
-        self.longitude = lon
+        self.latitude = np.random.normal(((Taxi_Location.min_lat+Taxi_Location.max_lat)/2),((Taxi_Location.max_lat-Taxi_Location.min_lat)/3))
+        self.longitude = np.random.normal(((Taxi_Location.min_lon+Taxi_Location.max_lon)/2),((Taxi_Location.max_lon-Taxi_Location.min_lon)/3))
 
     def randomise(self):
         self.latitude += np.random.normal()*Taxi_Location.mean_deglat_per_10m
@@ -161,7 +161,7 @@ echo "WORD1\\nWORD2\\nWORD3" | sample_wordputter.py -s STREAM_NAME -p 3
     # Now the stream should exist, let's populate with Taxis
     taxis = []
     for i in range(10):
-        taxis.append(Taxi_Location(random.randrange(1000),random.randrange(1000)))
+        taxis.append(Taxi_Location())
     put_loc_in_stream_periodically(conn, stream_name, taxis, args.period)
     # if len(args.words) == 0:
     #     print('No -w options provided. Waiting on input from STDIN')

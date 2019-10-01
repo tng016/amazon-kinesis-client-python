@@ -23,7 +23,7 @@ class Taxi_Location:
         self.latitude = lat
         self.longitude = lon
 
-    def randomise():
+    def randomise(self):
         self.latitude += np.random.normal()*mean_deglat_per_10m
         if self.latitude < Taxi_Location.min_lat:
             self.latitude = Taxi_Location.min_lat

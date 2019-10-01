@@ -71,8 +71,8 @@ def put_loc_in_stream(conn, stream_name, taxis):
     '''
     for t in taxis:
         try:
-            conn.put_record(stream_name, t.get_latlon(), t.id) #data,partitionkey
-            print("Put loc: " + t.get_latlon() + " into stream: " + stream_name+ " with partitionkey: " + t.id)
+            conn.put_record(stream_name, t.get_latlon(), str(t.id)) #data,partitionkey
+            print("Put loc: " + t.get_latlon() + " into stream: " + stream_name+ " with partitionkey: " + str(t.id))
         except Exception as e:
             sys.stderr.write("Encountered an exception while trying to put a loc: "
                              + t.get_latlon() + " into stream: " + stream_name + " exception was: " + str(e))

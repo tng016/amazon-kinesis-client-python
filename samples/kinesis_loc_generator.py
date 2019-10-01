@@ -6,15 +6,35 @@ SPDX-License-Identifier: Apache-2.0
 from __future__ import print_function
 import sys, random, time, argparse
 from boto import kinesis
+import numpy.random.normal
 
 class Taxi_Location:
     num = 0
+    max_lat = 40.89985962
+    min_lat = 40.52729818
+    max_lon = -73.70907059
+    min_lon = -74.22954655
+    mean_deglat_per_10m = 2.99437E-05
+    mean_deglon_per_10m = 4.23496E-05
 
     def __init__(self, lat, lon):
         self.id = Taxi_Location.num
         Taxi_Location.num += 1
         self.latitude = lat
         self.longitude = lon
+
+    def randomise():
+        self.latitude += numpy.random.normal()*mean_deglat_per_10m
+        if self.latitude < Taxi_Location.min_lat:
+            self.latitude = Taxi_Location.min_lat
+        elif if self.latitude > Taxi_Location.max_lat:
+            self.latitude = Taxi_Location.max_lat
+
+        self.longitude += numpy.random.normal()*mean_deglon_per_10m
+        if self.longitude < Taxi_Location.min_lon:
+            self.longitude = Taxi_Location.min_lon
+        elif if self.longitude > Taxi_Location.max_lon:
+            self.longitude = Taxi_Location.max_lon
 
     def get_latlon(self):
         return str(self.latitude)+','+str(self.longitude)
@@ -71,6 +91,7 @@ def put_loc_in_stream(conn, stream_name, taxis):
     '''
     for t in taxis:
         try:
+            t.randomise()
             conn.put_record(stream_name, t.get_latlon(), str(t.id)) #data,partitionkey
             print("Put loc: " + t.get_latlon() + " into stream: " + stream_name+ " with partitionkey: " + str(t.id))
         except Exception as e:

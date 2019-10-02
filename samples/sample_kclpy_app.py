@@ -92,8 +92,9 @@ class RecordProcessor(processor.RecordProcessorBase):
         ####################################
         # Insert your processing logic here
         ####################################
-        self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
-                 .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
+        sys.stderr.write("got data")
+        # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
+        #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 
     def should_update_sequence(self, sequence_number, sub_sequence_number):
         """

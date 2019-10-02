@@ -48,6 +48,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         """
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
+        self._last_aggregate_time = time.time()
 
     def checkpoint(self, checkpointer, sequence_number=None, sub_sequence_number=None):
         """
@@ -145,6 +146,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds
             #
             if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
+                print("time to aggregate")
                 agg = TaxiDirectory.aggregate()
                 for key in agg:
                     self.log("AGGREGATE Record (Partition Key: {pk}, count: {lat}, totaldist_travel: {lon})"

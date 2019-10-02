@@ -14,23 +14,26 @@ class Taxi_Location:
     min_lat = 40.52729818
     max_lon = -73.70907059
     min_lon = -74.22954655
-    mean_deglat_per_10m = 2.99437E-05
-    mean_deglon_per_10m = 4.23496E-05
+    mean_deglat_per_10s = 4.99062E-07
+    mean_deglon_per_10s = 7.058267E-07
 
     def __init__(self):
         self.id = Taxi_Location.num
         Taxi_Location.num += 1
-        self.latitude = np.random.normal(((Taxi_Location.min_lat+Taxi_Location.max_lat)/2),((Taxi_Location.max_lat-Taxi_Location.min_lat)/3))
-        self.longitude = np.random.normal(((Taxi_Location.min_lon+Taxi_Location.max_lon)/2),((Taxi_Location.max_lon-Taxi_Location.min_lon)/3))
+        self.latitude = (Taxi_Location.min_lat + (Taxi_Location.max_lat-Taxi_Location.min_lat)/1000*random.randrange(1000))
+        self.longitude = (Taxi_Location.min_lon + (Taxi_Location.max_lon-Taxi_Location.min_lon)/1000*random.randrange(1000))
+
+        # self.latitude = np.random.normal(((Taxi_Location.min_lat+Taxi_Location.max_lat)/2),((Taxi_Location.max_lat-Taxi_Location.min_lat)/3))
+        # self.longitude = np.random.normal(((Taxi_Location.min_lon+Taxi_Location.max_lon)/2),((Taxi_Location.max_lon-Taxi_Location.min_lon)/3))
 
     def randomise(self):
-        self.latitude += np.random.normal()*Taxi_Location.mean_deglat_per_10m
+        self.latitude += np.random.normal()*Taxi_Location.mean_deglat_per_10s
         if self.latitude < Taxi_Location.min_lat:
             self.latitude = Taxi_Location.min_lat
         elif self.latitude > Taxi_Location.max_lat:
             self.latitude = Taxi_Location.max_lat
 
-        self.longitude += np.random.normal()*Taxi_Location.mean_deglon_per_10m
+        self.longitude += np.random.normal()*Taxi_Location.mean_deglon_per_10s
         if self.longitude < Taxi_Location.min_lon:
             self.longitude = Taxi_Location.min_lon
         elif self.longitude > Taxi_Location.max_lon:

@@ -31,7 +31,10 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._last_checkpoint_time = None
 
     def log(self, message):
-        sys.stderr.write(message)
+        # sys.stderr.write(message)
+        f=open("log.txt", "a+")
+        f.write("%s\r\n" % message)
+        f.close()
 
     def initialize(self, initialize_input):
         """
@@ -93,9 +96,9 @@ class RecordProcessor(processor.RecordProcessorBase):
         ####################################
         # Insert your processing logic here
         ####################################
-        print(data)
-        # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
-        #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
+        # print(data)
+        self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
+                 .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 
     def should_update_sequence(self, sequence_number, sub_sequence_number):
         """
@@ -149,11 +152,5 @@ class RecordProcessor(processor.RecordProcessorBase):
 
 
 if __name__ == "__main__":
-    TaxiDirectory.put(1,40.7165036056,-73.9190213114)
-    TaxiDirectory.put(1,40.7356258347,-73.9022453005)
-    TaxiDirectory.put(2,40.7165036056,-73.9190213114)
-    TaxiDirectory.put(2,40.7356258347,-73.9022453005)
-    print(TaxiDirectory.d[1].lat,TaxiDirectory.d[1].lon,TaxiDirectory.d[1].geohash,TaxiDirectory.d[1].dist_travel)
-    print(TaxiDirectory.aggregate())
     kcl_process = kcl.KCLProcess(RecordProcessor())
     kcl_process.run()

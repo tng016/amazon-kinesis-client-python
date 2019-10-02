@@ -1,4 +1,4 @@
-import geohash2 as Geohash
+import Geohash
 import math
 
 class TaxiLocation:
@@ -25,12 +25,14 @@ class TaxiLocation:
 class TaxiDirectory:
 	d = {}
 
+	@staticmethod
 	def put(id,lat,lon):
 		if id in TaxiDirectory.d.keys():
 			TaxiDirectory.d[id].update(lat,lon)
 		else:
 			TaxiDirectory.d[id] = TaxiLocation(lat,lon)
 
+	@staticmethod
 	def aggregate():
 		res = {}
 		for key in TaxiDirectory.d.keys():
@@ -42,10 +44,10 @@ class TaxiDirectory:
 				res[obj.geohash] = [1,obj.dist_travel]
 		return res
 
-if __name__== "__main__":
-	TaxiDirectory.put(1,40.7165036056,-73.9190213114)
-	TaxiDirectory.put(1,40.7356258347,-73.9022453005)
-	TaxiDirectory.put(2,40.7165036056,-73.9190213114)
-	TaxiDirectory.put(2,40.7356258347,-73.9022453005)
-	print(TaxiDirectory.d[1].lat,TaxiDirectory.d[1].lon,TaxiDirectory.d[1].geohash,TaxiDirectory.d[1].dist_travel)
-	print(TaxiDirectory.aggregate())
+# if __name__== "__main__":
+# 	TaxiDirectory.put(1,40.7165036056,-73.9190213114)
+# 	TaxiDirectory.put(1,40.7356258347,-73.9022453005)
+# 	TaxiDirectory.put(2,40.7165036056,-73.9190213114)
+# 	TaxiDirectory.put(2,40.7356258347,-73.9022453005)
+# 	print(TaxiDirectory.d[1].lat,TaxiDirectory.d[1].lon,TaxiDirectory.d[1].geohash,TaxiDirectory.d[1].dist_travel)
+# 	print(TaxiDirectory.aggregate())

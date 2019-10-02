@@ -10,6 +10,7 @@ import time
 
 from amazon_kclpy import kcl
 from amazon_kclpy.v3 import processor
+import TaxiDirector
 
 
 class RecordProcessor(processor.RecordProcessorBase):
@@ -148,5 +149,11 @@ class RecordProcessor(processor.RecordProcessorBase):
 
 
 if __name__ == "__main__":
+    TaxiDirectory.put(1,40.7165036056,-73.9190213114)
+    TaxiDirectory.put(1,40.7356258347,-73.9022453005)
+    TaxiDirectory.put(2,40.7165036056,-73.9190213114)
+    TaxiDirectory.put(2,40.7356258347,-73.9022453005)
+    print(TaxiDirectory.d[1].lat,TaxiDirectory.d[1].lon,TaxiDirectory.d[1].geohash,TaxiDirectory.d[1].dist_travel)
+    print(TaxiDirectory.aggregate())
     kcl_process = kcl.KCLProcess(RecordProcessor())
     kcl_process.run()

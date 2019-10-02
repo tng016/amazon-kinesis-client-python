@@ -7,6 +7,7 @@ from __future__ import print_function
 
 import sys
 import time
+import json
 
 from amazon_kclpy import kcl
 from amazon_kclpy.v3 import processor
@@ -29,6 +30,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
+        self._AGGREGATE_FREQ_SECONDS = 20
+        self._last_aggregate_time = None
 
     def log(self, message):
         # sys.stderr.write(message)
@@ -97,10 +100,10 @@ class RecordProcessor(processor.RecordProcessorBase):
         # Insert your processing logic here
         ####################################
         # print(data)
-        data = data.split(',')
-        TaxiDirectory.put(partition_key,data[0],data[1])
-        self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon}"
-                 .format(pk=partition_key, lat=data[0], lat=data[1]))
+        latlon = data.split(',')
+        #self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon}"
+        #         .format(pk=partition_key, lat=latlon[0], lon = latlon[1]))
+        TaxiDirectory.put(int(partition_key),float(latlon[0]),float(latlon[1]))
         # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
         #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 
@@ -132,7 +135,15 @@ class RecordProcessor(processor.RecordProcessorBase):
                 self.process_record(data, key, seq, sub_seq)
                 if self.should_update_sequence(seq, sub_seq):
                     self._largest_seq = (seq, sub_seq)
-
+            
+            self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash},distance traveled: {dist},"
+                 .format(pk=1, lat=TaxiDirectory.d[1].lat, lon = TaxiDirectory.d[1].lon, geohash = TaxiDirectory.d[1].geohash, dist = TaxiDirectory.d[1].dist_travel))
+            #
+            # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds
+            #
+            if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
+                self.log(json.dumps(TaxiDirectory.aggregate()))
+            
             #
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds
             #

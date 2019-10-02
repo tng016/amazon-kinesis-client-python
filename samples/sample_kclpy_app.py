@@ -104,6 +104,9 @@ class RecordProcessor(processor.RecordProcessorBase):
         #self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon}"
         #         .format(pk=partition_key, lat=latlon[0], lon = latlon[1]))
         TaxiDirectory.put(int(partition_key),float(latlon[0]),float(latlon[1]))
+        loc = TaxiDirectory.d[int(partition_key)]
+        self.log("PUT Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash},distance traveled: {dist})"
+                 .format(pk=partition_key, lat=loc.lat, lon = loc.lon, geohash = loc.geohash, dist = loc.dist_travel))
         # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
         #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 
@@ -136,14 +139,17 @@ class RecordProcessor(processor.RecordProcessorBase):
                 if self.should_update_sequence(seq, sub_seq):
                     self._largest_seq = (seq, sub_seq)
             
-            self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash},distance traveled: {dist},"
-                 .format(pk=1, lat=TaxiDirectory.d[1].lat, lon = TaxiDirectory.d[1].lon, geohash = TaxiDirectory.d[1].geohash, dist = TaxiDirectory.d[1].dist_travel))
+            # self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash},distance traveled: {dist},"
+            #      .format(pk=1, lat=TaxiDirectory.d[1].lat, lon = TaxiDirectory.d[1].lon, geohash = TaxiDirectory.d[1].geohash, dist = TaxiDirectory.d[1].dist_travel))
             #
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds
             #
             if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
-                self.log(json.dumps(TaxiDirectory.aggregate()))
-            
+                agg = TaxiDirectory.aggregate()
+                for key in agg:
+                    self.log("AGGREGATE Record (Partition Key: {pk}, count: {lat}, totaldist_travel: {lon})"
+                     .format(pk=key, lat=agg[key][0], lon = lagg[key][0]))
+                
             #
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds
             #

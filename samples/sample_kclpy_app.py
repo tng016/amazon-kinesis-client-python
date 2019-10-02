@@ -92,7 +92,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         ####################################
         # Insert your processing logic here
         ####################################
-        sys.stderr.write("got data")
+        print(data)
         # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
         #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 

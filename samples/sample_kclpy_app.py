@@ -106,8 +106,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         #         .format(pk=partition_key, lat=latlon[0], lon = latlon[1]))
         TaxiDirectory.put(int(partition_key),float(latlon[0]),float(latlon[1]))
         loc = TaxiDirectory.d[int(partition_key)]
-        self.log("PUT Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash},distance traveled: {dist})"
-                 .format(pk=partition_key, lat=loc.lat, lon = loc.lon, geohash = loc.geohash, dist = loc.dist_travel))
+        self.log("PUT Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash})"
+                 .format(pk=partition_key, lat=loc.lat, lon = loc.lon, geohash = loc.geohash))
         # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
         #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 
@@ -149,8 +149,8 @@ class RecordProcessor(processor.RecordProcessorBase):
                 self.log("time to aggregate!!!\r\n\n\n")
                 agg = TaxiDirectory.aggregate()
                 for key in agg:
-                    self.log("AGGREGATE Record (Partition Key: {pk}, count: {lat}, totaldist_travel: {lon})"
-                     .format(pk=key, lat=agg[key][0], lon = agg[key][0]))
+                    self.log("AGGREGATE Record (Partition Key: {pk}, entry_count: {lat}, totaldist_travel: {lon},total cars: {c})"
+                     .format(pk=key, lat=agg[key][1], lon = agg[key][0], c = agg[key][2]))
                 self._last_aggregate_time = time.time()
                 
             #

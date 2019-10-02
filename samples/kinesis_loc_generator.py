@@ -27,13 +27,19 @@ class Taxi_Location:
         # self.longitude = np.random.normal(((Taxi_Location.min_lon+Taxi_Location.max_lon)/2),((Taxi_Location.max_lon-Taxi_Location.min_lon)/3))
 
     def randomise(self):
-        self.latitude += np.random.normal()*Taxi_Location.mean_deglat_per_10s
+        if random.randrange(1):
+            self.latitude += np.random.normal(Taxi_Location.mean_deglat_per_10s,Taxi_Location.mean_deglat_per_10s/2)
+        else:
+            self.latitude -= np.random.normal(Taxi_Location.mean_deglat_per_10s,Taxi_Location.mean_deglat_per_10s/2)
         if self.latitude < Taxi_Location.min_lat:
             self.latitude = Taxi_Location.min_lat
         elif self.latitude > Taxi_Location.max_lat:
             self.latitude = Taxi_Location.max_lat
 
-        self.longitude += np.random.normal()*Taxi_Location.mean_deglon_per_10s
+        if random.randrange(1):
+            self.longitude += np.random.normal(Taxi_Location.mean_deglon_per_10s,Taxi_Location.mean_deglon_per_10s/2)
+        else:
+            self.longitude -= np.random.normal(Taxi_Location.mean_deglon_per_10s,Taxi_Location.mean_deglon_per_10s/2)
         if self.longitude < Taxi_Location.min_lon:
             self.longitude = Taxi_Location.min_lon
         elif self.longitude > Taxi_Location.max_lon:

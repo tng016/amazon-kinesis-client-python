@@ -10,7 +10,7 @@ import time
 
 from amazon_kclpy import kcl
 from amazon_kclpy.v3 import processor
-import TaxiDirectory
+from TaxiDirectory import TaxiDirectory
 
 
 class RecordProcessor(processor.RecordProcessorBase):
@@ -97,8 +97,12 @@ class RecordProcessor(processor.RecordProcessorBase):
         # Insert your processing logic here
         ####################################
         # print(data)
-        self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
-                 .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
+        data = data.split(',')
+        TaxiDirectory.put(partition_key,data[0],data[1])
+        self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon}"
+                 .format(pk=partition_key, lat=data[0], lat=data[1]))
+        # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
+        #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 
     def should_update_sequence(self, sequence_number, sub_sequence_number):
         """

@@ -10,7 +10,7 @@ import time
 
 from amazon_kclpy import kcl
 from amazon_kclpy.v3 import processor
-import TaxiDirector
+import TaxiDirectory
 
 
 class RecordProcessor(processor.RecordProcessorBase):

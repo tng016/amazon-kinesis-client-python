@@ -151,6 +151,7 @@ class RecordProcessor(processor.RecordProcessorBase):
                 for key in agg:
                     self.log("AGGREGATE Record (Partition Key: {pk}, count: {lat}, totaldist_travel: {lon})"
                      .format(pk=key, lat=agg[key][0], lon = agg[key][0]))
+                self._last_aggregate_time = time.time()
                 
             #
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds

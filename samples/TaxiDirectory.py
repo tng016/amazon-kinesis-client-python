@@ -42,6 +42,7 @@ class TaxiDirectory:
 				res[obj.geohash][1] += obj.dist_travel
 			else:
 				res[obj.geohash] = [1,obj.dist_travel]
+		TaxiDirectory.d = {}
 		return res
 
 # if __name__== "__main__":

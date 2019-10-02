@@ -14,8 +14,8 @@ class Taxi_Location:
     min_lat = 40.52729818
     max_lon = -73.70907059
     min_lon = -74.22954655
-    mean_deglat_per_10s = 4.99062E-07
-    mean_deglon_per_10s = 7.058267E-07
+    mean_deglat_per_10s = 4.99062E-03
+    mean_deglon_per_10s = 7.058267E-03
 
     def __init__(self):
         self.id = Taxi_Location.num

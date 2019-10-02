@@ -146,11 +146,11 @@ class RecordProcessor(processor.RecordProcessorBase):
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds
             #
             if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
-                print("time to aggregate")
+                self.log("time to aggregate!!!\r\n\n\n")
                 agg = TaxiDirectory.aggregate()
                 for key in agg:
                     self.log("AGGREGATE Record (Partition Key: {pk}, count: {lat}, totaldist_travel: {lon})"
-                     .format(pk=key, lat=agg[key][0], lon = lagg[key][0]))
+                     .format(pk=key, lat=agg[key][0], lon = agg[key][0]))
                 
             #
             # Checkpoints every self._CHECKPOINT_FREQ_SECONDS seconds

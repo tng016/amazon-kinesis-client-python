@@ -151,8 +151,8 @@ class RecordProcessor(processor.RecordProcessorBase):
             if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
                 self.log("time to aggregate!!!\r\n\n\n")
                 agg = self.directory.aggregate()
-                # response = post_request.post_to_app(agg)
-                # self.log(response)
+                response = post_request.post_to_app(agg)
+                self.log(response)
                 for key in agg.keys():
                     self.log("AGGREGATE Record (Partition Key: {pk}, entry_count: {lat}, totaldist_travel: {lon},total cars: {c})"
                      .format(pk=key, lat=agg[key][1], lon = agg[key][0], c = agg[key][2]))

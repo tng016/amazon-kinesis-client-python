@@ -3,7 +3,7 @@ import requests
 
 def post_to_app(data):
 	# defining the api-endpoint  
-	API_ENDPOINT = "http://localhost:3000/populate"
+	API_ENDPOINT = "http://grabassignment-env-1.ea33qnuunt.us-west-1.elasticbeanstalk.com/populate"
 	  
 	# your API key here 
 	# API_KEY = "XXXXXXXXXXXXXXXXX"

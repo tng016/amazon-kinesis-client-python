@@ -31,7 +31,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
-        self._AGGREGATE_FREQ_SECONDS = 60
+        self._AGGREGATE_FREQ_SECONDS = 600
         self._last_aggregate_time = None
         self.directory = None
 
@@ -151,7 +151,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
                 self.log("time to aggregate!!!\r\n\n\n")
                 agg = self.directory.aggregate()
-                response = post_request.post_to_app(a)
+                response = post_request.post_to_app(agg)
                 self.log(response)
                 for key in agg.keys():
                     self.log("AGGREGATE Record (Partition Key: {pk}, entry_count: {lat}, totaldist_travel: {lon},total cars: {c})"

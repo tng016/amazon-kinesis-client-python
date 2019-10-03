@@ -47,7 +47,7 @@ class TaxiDirectory:
 				TaxiDirectory.hashes[obj.geohash][2] += 1
 		res = TaxiDirectory.hashes
 		TaxiDirectory.d = {}
-		TaxiDirectory.hashes = {}
+		# TaxiDirectory.hashes = {}
 		return res
 
 # if __name__== "__main__":

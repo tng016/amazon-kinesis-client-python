@@ -32,6 +32,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._last_checkpoint_time = None
         self._AGGREGATE_FREQ_SECONDS = 60
         self._last_aggregate_time = None
+        self.directory = None
 
     def log(self, message):
         # sys.stderr.write(message)
@@ -49,6 +50,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._last_checkpoint_time = time.time()
         self._last_aggregate_time = time.time()
+        self.directory = TaxiDirectory()
 
     def checkpoint(self, checkpointer, sequence_number=None, sub_sequence_number=None):
         """
@@ -104,8 +106,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         latlon = data.split(',')
         #self.log("Record (Partition Key: {pk}, lat: {lat}, lon: {lon}"
         #         .format(pk=partition_key, lat=latlon[0], lon = latlon[1]))
-        TaxiDirectory.put(int(partition_key),float(latlon[0]),float(latlon[1]))
-        loc = TaxiDirectory.d[int(partition_key)]
+        self.directory.put(int(partition_key),float(latlon[0]),float(latlon[1]))
+        loc = self.directory.d[int(partition_key)]
         self.log("PUT Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash})"
                  .format(pk=partition_key, lat=loc.lat, lon = loc.lon, geohash = loc.geohash))
         # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
@@ -147,7 +149,7 @@ class RecordProcessor(processor.RecordProcessorBase):
             #
             if time.time() - self._last_aggregate_time > self._AGGREGATE_FREQ_SECONDS:
                 self.log("time to aggregate!!!\r\n\n\n")
-                agg = TaxiDirectory.aggregate()
+                agg = self.directory.aggregate()
                 for key in agg.keys():
                     self.log("AGGREGATE Record (Partition Key: {pk}, entry_count: {lat}, totaldist_travel: {lon},total cars: {c})"
                      .format(pk=key, lat=agg[key][1], lon = agg[key][0], c = agg[key][2]))

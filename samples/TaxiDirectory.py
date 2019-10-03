@@ -1,4 +1,4 @@
-import geohash2 as Geohash
+import Geohash
 import math
 import json
 

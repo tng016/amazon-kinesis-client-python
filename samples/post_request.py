@@ -1,5 +1,6 @@
 # importing the requests library 
 import requests 
+import json
 
 def post_to_app(data):
 	# defining the api-endpoint  
@@ -17,7 +18,8 @@ def post_to_app(data):
 	processed_data = {'surge': data}
 	# sending post request and saving response as response object 
 	try:
-		r = requests.post(url = API_ENDPOINT, json = processed_data) 
+		headers = {'content-type': 'application/json'}
+		r = requests.post(url = API_ENDPOINT, data=json.dumps(processed_data), headers=headers) 
 		# extracting response text  
 		return(r.status_code)
 	except requests.exceptions.RequestException as e:

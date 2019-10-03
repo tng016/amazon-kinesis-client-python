@@ -109,8 +109,8 @@ class RecordProcessor(processor.RecordProcessorBase):
         #         .format(pk=partition_key, lat=latlon[0], lon = latlon[1]))
         self.directory.put(int(partition_key),float(latlon[0]),float(latlon[1]))
         loc = self.directory.d[int(partition_key)]
-        self.log("PUT Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash})"
-                 .format(pk=partition_key, lat=loc.lat, lon = loc.lon, geohash = loc.geohash))
+        # self.log("PUT Record (Partition Key: {pk}, lat: {lat}, lon: {lon},geohash: {geohash})"
+                 # .format(pk=partition_key, lat=loc.lat, lon = loc.lon, geohash = loc.geohash))
         # self.log("Record (Partition Key: {pk}, Sequence Number: {seq}, Subsequence Number: {sseq}, Data Size: {ds}"
         #          .format(pk=partition_key, seq=sequence_number, sseq=sub_sequence_number, ds=len(data)))
 

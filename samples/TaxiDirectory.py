@@ -1,4 +1,4 @@
-import Geohash
+import geohash2 as Geohash
 import math
 import json
 
@@ -33,9 +33,8 @@ class TaxiDirectory:
 		if id in self.d.keys():
 			loc =self.d[id]
 			dist = loc.calc_dist(lat,lon)
-			print("dist",dist)
 			loc.update(lat,lon)
-			if dist < 150:
+			if dist < 200:
 				if loc.geohash in self.hashes.keys():
 					self.hashes[loc.geohash][0] += dist
 					self.hashes[loc.geohash][1] += 1

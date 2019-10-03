@@ -31,7 +31,7 @@ class RecordProcessor(processor.RecordProcessorBase):
         self._largest_seq = (None, None)
         self._largest_sub_seq = None
         self._last_checkpoint_time = None
-        self._AGGREGATE_FREQ_SECONDS = 60
+        self._AGGREGATE_FREQ_SECONDS = 600
         self._last_aggregate_time = None
         self.directory = None
 
